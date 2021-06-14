@@ -1,0 +1,21 @@
+{
+	"scripts": {
+		"serve": "cross-env TAILWIND_MODE=watch  NODE_ENV=development concurrently \"postcss public/tailwind.css -o public/build/tailwind.css --watch\"  \"live-server ./public --no-browser\"",
+		"development": "cross-env TAILWIND_MODE=watch  NODE_ENV=development postcss public/tailwind.css -o public/build/tailwind.css",
+		"production": "cross-env TAILWIND_MODE=build  NODE_ENV=production postcss public/tailwind.css -o public/build/tailwind.css",
+		"start": "npm run serve"
+	},
+	"dependencies": {
+		"@downwindcss/flex-center": "1.0.0",
+		"autoprefixer": "10.2.5",
+		"concurrently": "6.0.1",
+		"cross-env": "7.0.3",
+		"live-server": "1.2.1",
+		"postcss": "8.3.3",
+		"postcss-cli": "8.3.1",
+		"tailwindcss": "2.x"
+	},
+	"keywords": [],
+	"name": "postcss-plugin-demo",
+	"description": "Demo for a custom Tailwind CSS plugin, @downwindcss/flex-center utility.  https://www.npmjs.com/package/@downwindcss/flex-center"
+}
