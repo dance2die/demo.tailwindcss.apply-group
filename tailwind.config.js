@@ -15,11 +15,11 @@ const variantGroupPlugin = plugin(variantGroup);
 module.exports = {
 	// uncomment this to enable Just-in-Time mode
 	// https://tailwindcss.com/docs/just-in-time-mode#enabling-jit-mode
-	// mode: "jit",
+	mode: 'jit',
 	theme: {
 		extend: {}
 	},
-	dark: 'class',
+	darkMode: 'class',
 	// corePlugins: [ 'margin', 'ringWidth', 'backgroundColor' ],
 	variants: {},
 	plugins: [ variantGroupPlugin, require('@downwindcss/flex-center') ],

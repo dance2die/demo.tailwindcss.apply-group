@@ -8,36 +8,32 @@
   }
 } */
 
+    /* text-xs
+    text-white
+    md:text-3xl
 
+    sm:(
+      dark:(bg-black text-pink-200)
+      light:(text-black bg-white hover:(text-gray-500 bg-gray-200))
+    )
+    md:(
+      dark:(text-grey bg-yellow)
+      light:(text-grey bg-yellow hover:(text-gray-700 bg-gray-100))
+    ) */
 @layer components {
-
-  @responsive {
   .btn-blue {
-    /* @apply-group
-      mt-4 focus:(ring-0 bg-gray-300)
-      lg:(
-        mt-8 
-        focus:(ring-1 bg-black)
-      )
-      xl:(
-      	mt-16
-      	focus:(ring-2 bg-pink-800)
-        
-      ); */
-
-
-
     @apply-group 
-      text-xs
-      md:text-3xl
-      dark:(
-        sm:(text-white bg-black)
-        md:(text-grey bg-yellow)
+      text-xs text-white p-2 bg-blue-700
+      dark:(text-gray-800 bg-gray-300)
+      sm:(
+        text-sm p-4
+        bg-yellow-700 text-gray-100
+        dark:(bg-gray-500 text-white)
       )
-      light:(
-        sm:(text-black bg-white hover:(text-gray-500 bg-gray-200))
-        md:(text-grey bg-yellow hover:(text-gray-700 bg-gray-100))
+      md:(
+        text-base p-8
+        bg-red-300 text-black
+        dark:(bg-gray-800 text-red-100)
       )
-    }
   }
 }

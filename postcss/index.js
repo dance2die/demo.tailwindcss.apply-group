@@ -62,7 +62,7 @@ function build(text, result = [], variant = '') {
 function processCSS(css, result) {
 	css.walkAtRules('apply-group', (atRule) => {
 		const built = [];
-		console.log('----BEFORE', { atRule });
+		// console.log('----BEFORE', { atRule });
 
 		atRule.name = 'apply';
 		build(atRule.params, built);
@@ -70,12 +70,11 @@ function processCSS(css, result) {
 
 		// rule.params = 'text-xl bg-red-700 text-yellow-200';
 		// rule.name = 'apply';
-		console.log('----AFTER', { atRule });
+		console.log('----AFTER', { atRule: atRule.params });
 	});
 
-	console.log({ result });
-
-	console.log('===========>', { css: css.nodes.toString(), result });
+	// console.log({ result });
+	// console.log('===========>', { css: css.nodes.toString(), result });
 }
 
 function variantGroupsPlugin(css, result) {
