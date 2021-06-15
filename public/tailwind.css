@@ -2,14 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
+/* @layer components {
   .btn-blue {
     @apply-group bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded;
   }
-}
+} */
 
 
-/* @layer components {
+@layer components {
   .btn-blue {
     @apply-group
       mt-4 focus:(ring-none bg-gray-300)
@@ -22,4 +22,4 @@
       	focus:(ring-2 bg-pink-800)
       );
   }
-} */
+}

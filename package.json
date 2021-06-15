@@ -11,13 +11,14 @@
 		"concurrently": "6.0.1",
 		"cross-env": "7.0.3",
 		"live-server": "1.2.1",
-		"postcss-cli": "8.3.1",
-		"tailwindcss": "2.x"
+		"tailwindcss": "2.x",
+		"xregexp": "^5.0.2"
 	},
 	"keywords": [],
 	"name": "postcss-plugin-demo",
 	"description": "Demo for a custom Tailwind CSS plugin, @downwindcss/flex-center utility.  https://www.npmjs.com/package/@downwindcss/flex-center",
-	"peerDependencies": {
-		"postcss": "^8.3.4"
+	"devDependencies": {
+		"postcss": "^8.3.4",
+		"postcss-cli": "^8.3.1"
 	}
 }
