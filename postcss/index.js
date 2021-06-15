@@ -24,9 +24,12 @@ function hasAtRule(css, atRule, condition) {
 }
 
 const newline = /\r?\n|\r|\t/gim;
-const start = '\\S+:\\(';
+// const start = '(\\S[^:\\(]+):\\(';
+// const start = '\\S+:\\(';
+// https://stackoverflow.com/a/449000/4035
+const start = '(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)+:\\(';
 const end = '\\)';
-const flags = 'gim';
+const flags = 'gimu';
 const valueNames = [ 'between', 'variant', 'inside-variant' ];
 
 const matcher = (text) =>
@@ -42,7 +45,7 @@ function build(text, result = [], variant = '') {
 		return;
 	}
 
-	// console.info({ ______matches: matches });
+	console.info({ ______matches: matches });
 
 	let currentVariant = variant;
 	matches.map(({ name, value }) => {
