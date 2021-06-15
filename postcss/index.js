@@ -45,7 +45,7 @@ function build(text, result = [], variant = '') {
 		return;
 	}
 
-	console.info({ ______matches: matches });
+	// console.log({ ______matches: matches });
 
 	let currentVariant = variant;
 	matches.map(({ name, value }) => {
