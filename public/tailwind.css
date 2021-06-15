@@ -10,9 +10,11 @@
 
 
 @layer components {
+
+  @responsive {
   .btn-blue {
-    @apply-group
-      mt-4 focus:(ring-none bg-gray-300)
+    /* @apply-group
+      mt-4 focus:(ring-0 bg-gray-300)
       lg:(
         mt-8 
         focus:(ring-1 bg-black)
@@ -20,6 +22,22 @@
       xl:(
       	mt-16
       	focus:(ring-2 bg-pink-800)
-      );
+        
+      ); */
+
+
+
+    @apply-group 
+      text-xs
+      md:text-3xl
+      dark:(
+        sm:(text-white bg-black)
+        md:(text-grey bg-yellow)
+      )
+      light:(
+        sm:(text-black bg-white hover:(text-gray-500 bg-gray-200))
+        md:(text-grey bg-yellow hover:(text-gray-700 bg-gray-100))
+      )
+    }
   }
 }

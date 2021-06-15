@@ -1,54 +1,27 @@
-// const postcss = require('postcss');
+const postcss = require('postcss');
 const XRegExp = require('xregexp');
+const tailwindcss = require('tailwindcss');
 
-// function hasAtRule(css, atRule, condition) {
-// 	let found = false;
+function hasAtRule(css, atRule, condition) {
+	let found = false;
 
-// 	css.walkAtRules(
-// 		atRule,
-// 		condition === undefined
-// 			? () => {
-// 					found = true;
-// 					return false;
-// 				}
-// 			: (node) => {
-// 					if (condition(node)) {
-// 						found = true;
-// 						return false;
-// 					}
-// 				}
-// 	);
+	css.walkAtRules(
+		atRule,
+		condition === undefined
+			? () => {
+					found = true;
+					return false;
+				}
+			: (node) => {
+					if (condition(node)) {
+						found = true;
+						return false;
+					}
+				}
+	);
 
-// 	return found;
-// }
-
-// function processCSS(css, result) {
-// 	css.walkAtRules('apply-group', (rule) => {
-// 		console.log('----BEFORE', { rule });
-// 		rule.params = 'text-xl bg-red-700 text-yellow-200';
-// 		rule.name = 'apply';
-// 		console.log('----AFTER', { rule });
-// 	});
-
-// 	console.log({ result });
-
-// 	console.log('===========>', { css: css.nodes.toString(), result });
-// }
-
-// function variantGroupsPlugin(css, result) {
-// 	// if (!hasAtRule(css, 'apply-group')) {
-// 	// 	return css;
-// 	// }
-// 	// console.log({ css, css2: JSON.stringify(css.nodes, null, 2), result });
-
-// 	// return css;
-
-// 	return postcss([ processCSS ]).process(css, { from: __filename });
-// }
-
-// module.exports = postcss.plugin('variantGroups', (config) => {
-// 	return postcss([ variantGroupsPlugin ]).process();
-// });
+	return found;
+}
 
 const newline = /\r?\n|\r|\t/gim;
 const start = '\\S+:\\(';
@@ -56,12 +29,10 @@ const end = '\\)';
 const flags = 'gim';
 const valueNames = [ 'between', 'variant', 'inside-variant' ];
 
-const matcher = (text) => {
-	console.log({ matcherText: text });
-	return XRegExp.matchRecursive(text.replace(newline, ' '), start, end, flags, {
+const matcher = (text) =>
+	XRegExp.matchRecursive(text.replace(newline, ' '), start, end, flags, {
 		valueNames
 	});
-};
 
 // variant with ":"
 function build(text, result = [], variant = '') {
@@ -88,26 +59,74 @@ function build(text, result = [], variant = '') {
 	});
 }
 
-// Migration: https://evilmartians.com/chronicles/postcss-8-plugin-migration
-module.exports = (opts = {}) => {
-	return {
-		postcssPlugin: 'variantGroups',
-		// Once(root, rest) {
-		// 	console.log({ root, rest });
-		// 	return postcss([ variantGroupsPlugin ]).process();
-		// }
-		AtRule: {
-			'apply-group': (atRule) => {
-				const built = [];
-				// console.log('before --->', { atRule, built });
-				build(atRule.params, built);
-				atRule.params = built.join(' ');
-				// Let Tailwind process `@apply` rule with normalized groups
-				atRule.name = 'apply';
-				console.log('after --->', { atRule });
-			}
-		}
-	};
-};
+function processCSS(css, result) {
+	css.walkAtRules('apply-group', (atRule) => {
+		const built = [];
+		console.log('----BEFORE', { atRule });
+
+		atRule.name = 'apply';
+		build(atRule.params, built);
+		atRule.params = built.join(' ');
+
+		// rule.params = 'text-xl bg-red-700 text-yellow-200';
+		// rule.name = 'apply';
+		console.log('----AFTER', { atRule });
+	});
+
+	console.log({ result });
+
+	console.log('===========>', { css: css.nodes.toString(), result });
+}
+
+function variantGroupsPlugin(css, result) {
+	if (!hasAtRule(css, 'apply-group')) {
+		return css;
+	}
+	// console.log({ css, css2: JSON.stringify(css.nodes, null, 2), result });
+
+	// return css;
+
+	return postcss([ processCSS ]).process(css, { from: __filename });
+}
+
+module.exports = postcss.plugin('variantGroups', (config) => {
+	return postcss([ variantGroupsPlugin ]).process();
+});
+
+// // Migration: https://evilmartians.com/chronicles/postcss-8-plugin-migration
+// module.exports = (opts = {}) => {
+// 	return {
+// 		postcssPlugin: 'variantGroups',
+
+// 		prepare(result) {
+// 			const built = [];
+// 			console.log('initial result..........', { result, __filename });
+
+// 			return {
+// 				AtRule: {
+// 					'apply-group': (atRule) => {
+// 						// Let Tailwind process `@apply` rule with normalized groups
+// 						atRule.name = 'apply';
+// 						build(atRule.params, built);
+// 						atRule.params = built.join(' ');
+
+// 						console.log(':::::::::after --->', { atRule });
+// 						// result.processor.process(atRule.params);
+// 						// postcss([ tailwindcss ]).process(atRule.params);
+// 					},
+// 					apply: (atRule) => {
+// 						atRule.params = built.join(' ');
+// 						console.log(':::::::::APPPPPPLLLLLY --->', { atRule, css: atRule.parent.nodes.toString() });
+// 					}
+// 				},
+// 				AtRuleExit: {
+// 					apply: (atRule) => {
+// 						console.log({ ':::::::::atRuleExit........': atRule, result });
+// 					}
+// 				}
+// 			};
+// 		}
+// 	};
+// };
 
 module.exports.postcss = true;

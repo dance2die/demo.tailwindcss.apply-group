@@ -19,6 +19,7 @@ module.exports = {
 	theme: {
 		extend: {}
 	},
+	dark: 'class',
 	// corePlugins: [ 'margin', 'ringWidth', 'backgroundColor' ],
 	variants: {},
 	plugins: [ variantGroupPlugin, require('@downwindcss/flex-center') ],
